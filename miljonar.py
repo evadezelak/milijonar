@@ -44,10 +44,10 @@ def ustvari_vprasanja():
    odgovori_B_drugi = preberi_datoteko(odgovori_B_drugi, "odgovori_B_drugi_nivo.txt")
    odgovori_C_drugi = preberi_datoteko(odgovori_C_drugi, "odgovori_C_drugi_nivo.txt")
    odgovori_D_drugi = preberi_datoteko(odgovori_D_drugi, "odgovori_D_drugi_nivo.txt")
-   odgovori_A_tretji = preberi_datoteko(odgovori_A_tretji, "odgovori_A_drugi_nivo.txt")
-   odgovori_B_tretji = preberi_datoteko(odgovori_B_tretji, "odgovori_B_drugi_nivo.txt")
-   odgovori_C_tretji = preberi_datoteko(odgovori_C_tretji, "odgovori_C_drugi_nivo.txt")
-   odgovori_D_tretji = preberi_datoteko(odgovori_D_tretji, "odgovori_D_drugi_nivo.txt")
+   odgovori_A_tretji = preberi_datoteko(odgovori_A_tretji, "odgovori_A_tretji_nivo.txt")
+   odgovori_B_tretji = preberi_datoteko(odgovori_B_tretji, "odgovori_B_tretji_nivo.txt")
+   odgovori_C_tretji = preberi_datoteko(odgovori_C_tretji, "odgovori_C_tretji_nivo.txt")
+   odgovori_D_tretji = preberi_datoteko(odgovori_D_tretji, "odgovori_D_tretji_nivo.txt")
    resitve_prvi_nivo = preberi_datoteko(resitve_prvi_nivo, "resitve_prvi_nivo.txt")
    resitve_drugi_nivo = preberi_datoteko(resitve_drugi_nivo, "resitve_drugi_nivo.txt")
    resitve_tretji_nivo = preberi_datoteko(resitve_tretji_nivo, "resitve_tretji_nivo.txt")
@@ -276,17 +276,16 @@ def ponovna_igra_fun(zakljucna):
    visina_okna = okno.winfo_screenheight()
    ustvari_vprasanja()
    zasluzeni_denar = 0
-   stevilka_vprasanja = 15
+   stevilka_vprasanja = 1
    okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
    ozadje = tk.PhotoImage(file = "milijonar_ozadje.jpg")
    ozadje_s_sliko = tk.Label(okno, image = ozadje)
    ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-   #okno.configure(background = "blue")
-   #tk.Label(okno, text = "Milijonar", font = ("Comic Sans MS", 120)).place(relx = .5 , rely = .4, anchor = "center")
    gumb_za_zacetek = tk.Button(okno, text = "Začni z igro", font = ("Comic Sans MS", 20  ), command = lambda: zacni(okno))
    gumb_za_zacetek.place(relx = .5, rely = .6 , anchor = "center")
    izhod = tk.Button(okno, text = "Neupam :(", font = ("Comic Sans MS", 20  ), command = lambda: izhod__(okno))
    izhod.place(relx = .5, rely = .7 , anchor = "center")
+
 def prva():
    okno =  tk.Tk()
    glasba = "Who - Wants.wav"
@@ -296,26 +295,17 @@ def prva():
    visina_okna = okno.winfo_screenheight()
    ustvari_vprasanja()
    zasluzeni_denar = 0
-   stevilka_vprasanja = 15
+   stevilka_vprasanja = 1
    okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
    ozadje = tk.PhotoImage(file = "mil.gif")
    ozadje_s_sliko = tk.Label(okno, image = ozadje)
    ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-   #okno.configure(background = "blue")
-   #tk.Label(okno, text = "Milijonar", font = ("Comic Sans MS", 120)).place(relx = .5 , rely = .4, anchor = "center")
    gumb_za_zacetek = tk.Button(okno, text = "Začni z igro",fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: zacni(okno))
    gumb_za_zacetek.place(relx = .1, rely = .5 , anchor = "center")
    izhod = tk.Button(okno, text = "Neupam :(", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: izhod__(okno))
    izhod.place(relx = .9, rely = .5 , anchor = "center")
 
-   #print("Pozdravljena %s\n" % (vnos1.get())).grid( row = y - 1, column = x - 1)
-   ### ozadje to be
-   #photo = tk.PhotoImage(file = "milijonarlogo")
-   #slika = tk.Label(okno, image = photo)
-   ##ozadje = tk.PhotoImage(data = b64_ozadja)
-   ##oznaka_ozadja = tk.Label(parent, image = ozadje)
-   ##oznaka_ozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-   ###
+
 
    okno.mainloop()
 
