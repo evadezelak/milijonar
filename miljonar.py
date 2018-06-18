@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 import random
 import time
-
+import winsound
 
 nagrada = [100 , 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 1000000]
 
@@ -217,6 +217,7 @@ def izberi_novo_vprasanje():
    return seznam
 
 def zacni(okno):
+   winsound.PlaySound("Who Wants", winsound.SND_ALIAS | winsound.SND_ASYNC)
    okno.destroy()
    zacetek = tk.Tk()
    zacetek.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
@@ -236,20 +237,20 @@ def zacni(okno):
    novo.pack()
    global A, B, C, D
    if(stevilka_vprasanja <= 5):
-      A = tk.Button(zacetek, text = odgovori_A_prvi[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'a'))
-      B = tk.Button(zacetek, text = odgovori_B_prvi[indeks], fg ="blue", font = ("Comic Sans MS", 30),command = lambda: preveri_odgovor(indeks,zacetek, 'b'))
-      C = tk.Button(zacetek, text = odgovori_C_prvi[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'c'))
-      D = tk.Button(zacetek, text = odgovori_D_prvi[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'd'))
+      A = tk.Button(zacetek, text = odgovori_A_prvi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'a'))
+      B = tk.Button(zacetek, text = odgovori_B_prvi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30),command = lambda: preveri_odgovor(indeks,zacetek, 'b'))
+      C = tk.Button(zacetek, text = odgovori_C_prvi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'c'))
+      D = tk.Button(zacetek, text = odgovori_D_prvi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'd'))
    elif(stevilka_vprasanja > 5 and stevilka_vprasanja <= 10):
-      A = tk.Button(zacetek, text = odgovori_A_drugi[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'a'))
-      B = tk.Button(zacetek, text = odgovori_B_drugi[indeks], fg ="blue", font = ("Comic Sans MS", 30),command = lambda: preveri_odgovor(indeks,zacetek, 'b'))
-      C = tk.Button(zacetek, text = odgovori_C_drugi[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'c'))
-      D = tk.Button(zacetek, text = odgovori_D_drugi[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'd'))
+      A = tk.Button(zacetek, text = odgovori_A_drugi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'a'))
+      B = tk.Button(zacetek, text = odgovori_B_drugi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30),command = lambda: preveri_odgovor(indeks,zacetek, 'b'))
+      C = tk.Button(zacetek, text = odgovori_C_drugi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'c'))
+      D = tk.Button(zacetek, text = odgovori_D_drugi[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'd'))
    elif(stevilka_vprasanja > 10):
-      A = tk.Button(zacetek, text = odgovori_A_tretji[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'a'))
-      B = tk.Button(zacetek, text = odgovori_B_tretji[indeks], fg ="blue", font = ("Comic Sans MS", 30),command = lambda: preveri_odgovor(indeks,zacetek, 'b'))
-      C = tk.Button(zacetek, text = odgovori_C_tretji[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'c'))
-      D = tk.Button(zacetek, text = odgovori_D_tretji[indeks], fg ="blue", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'd'))
+      A = tk.Button(zacetek, text = odgovori_A_tretji[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'a'))
+      B = tk.Button(zacetek, text = odgovori_B_tretji[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30),command = lambda: preveri_odgovor(indeks,zacetek, 'b'))
+      C = tk.Button(zacetek, text = odgovori_C_tretji[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'c'))
+      D = tk.Button(zacetek, text = odgovori_D_tretji[indeks], fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: preveri_odgovor(indeks,zacetek, 'd'))
    A.place(relx = .4, rely = .4, anchor = "center")
    B.place(relx = .6, rely = .4, anchor = "center")
    C.place(relx = .4, rely = .5, anchor = "center")
@@ -268,6 +269,8 @@ def zacni(okno):
 def ponovna_igra_fun(zakljucna):
    zakljucna.destroy()
    okno =  tk.Tk()
+   glasba = "Who - Wants.wav"
+   winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
    global stevilka_vprasanja, zasluzeni_denar, sirina_okna, visina_okna
    sirina_okna = okno.winfo_screenwidth()
    visina_okna = okno.winfo_screenheight()
@@ -279,13 +282,15 @@ def ponovna_igra_fun(zakljucna):
    ozadje_s_sliko = tk.Label(okno, image = ozadje)
    ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
    #okno.configure(background = "blue")
-   tk.Label(okno, text = "Milijonar", font = ("Comic Sans MS", 120)).place(relx = .5 , rely = .4, anchor = "center")
+   #tk.Label(okno, text = "Milijonar", font = ("Comic Sans MS", 120)).place(relx = .5 , rely = .4, anchor = "center")
    gumb_za_zacetek = tk.Button(okno, text = "Začni z igro", font = ("Comic Sans MS", 20  ), command = lambda: zacni(okno))
    gumb_za_zacetek.place(relx = .5, rely = .6 , anchor = "center")
    izhod = tk.Button(okno, text = "Neupam :(", font = ("Comic Sans MS", 20  ), command = lambda: izhod__(okno))
    izhod.place(relx = .5, rely = .7 , anchor = "center")
 def prva():
    okno =  tk.Tk()
+   glasba = "Who - Wants.wav"
+   winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
    global stevilka_vprasanja, zasluzeni_denar, sirina_okna, visina_okna
    sirina_okna = okno.winfo_screenwidth()
    visina_okna = okno.winfo_screenheight()
