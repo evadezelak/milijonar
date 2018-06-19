@@ -36,24 +36,24 @@ class podatki:
       self.stevilka_vprasanja = stevilka_vprasanja
       self.zasluzeni_denar = zasluzeni_denar
       podatki.nagrada = [100 , 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 1000000]
-      podatki.vprasanja_prvi_nivo = podatki.preberi_datoteko([], "vprasanja_prvi_nivo.txt")
-      podatki.vprasanja_drugi_nivo = podatki.preberi_datoteko([], "vprasanja_drugi_nivo.txt")
-      podatki.vprasanja_tretji_nivo = podatki.preberi_datoteko([], "vprasanja_tretji_nivo.txt")
-      podatki.odgovori_A_prvi = podatki.preberi_datoteko([], "odgovori_A_prvi_nivo.txt")
-      podatki.odgovori_B_prvi = podatki.preberi_datoteko([], "odgovori_B_prvi_nivo.txt")
-      podatki.odgovori_C_prvi = podatki.preberi_datoteko([], "odgovori_C_prvi_nivo.txt")
-      podatki.odgovori_D_prvi = podatki.preberi_datoteko([], "odgovori_D_prvi_nivo.txt")
-      podatki.odgovori_A_drugi = podatki.preberi_datoteko([], "odgovori_A_drugi_nivo.txt")
-      podatki.odgovori_B_drugi = podatki.preberi_datoteko([], "odgovori_B_drugi_nivo.txt")
-      podatki.odgovori_C_drugi = podatki.preberi_datoteko([], "odgovori_C_drugi_nivo.txt")
-      podatki.odgovori_D_drugi = podatki.preberi_datoteko([], "odgovori_D_drugi_nivo.txt")
-      podatki.odgovori_A_tretji = podatki.preberi_datoteko([], "odgovori_A_tretji_nivo.txt")
-      podatki.odgovori_B_tretji = podatki.preberi_datoteko([], "odgovori_B_tretji_nivo.txt")
-      podatki.odgovori_C_tretji = podatki.preberi_datoteko([], "odgovori_C_tretji_nivo.txt")
-      podatki.odgovori_D_tretji = podatki.preberi_datoteko([], "odgovori_D_tretji_nivo.txt")
-      podatki.resitve_prvi_nivo = podatki.preberi_datoteko([], "resitve_prvi_nivo.txt")
-      podatki.resitve_drugi_nivo = podatki.preberi_datoteko([], "resitve_drugi_nivo.txt")
-      podatki.resitve_tretji_nivo = podatki.preberi_datoteko([], "resitve_tretji_nivo.txt")
+      podatki.vprasanja_prvi_nivo = podatki.preberi_datoteko([], "vprasanja/vprasanja_prvi_nivo.txt")
+      podatki.vprasanja_drugi_nivo = podatki.preberi_datoteko([], "vprasanja/vprasanja_drugi_nivo.txt")
+      podatki.vprasanja_tretji_nivo = podatki.preberi_datoteko([], "vprasanja/vprasanja_tretji_nivo.txt")
+      podatki.odgovori_A_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_A_prvi_nivo.txt")
+      podatki.odgovori_B_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_B_prvi_nivo.txt")
+      podatki.odgovori_C_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_C_prvi_nivo.txt")
+      podatki.odgovori_D_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_D_prvi_nivo.txt")
+      podatki.odgovori_A_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_A_drugi_nivo.txt")
+      podatki.odgovori_B_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_B_drugi_nivo.txt")
+      podatki.odgovori_C_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_C_drugi_nivo.txt")
+      podatki.odgovori_D_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_D_drugi_nivo.txt")
+      podatki.odgovori_A_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_A_tretji_nivo.txt")
+      podatki.odgovori_B_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_B_tretji_nivo.txt")
+      podatki.odgovori_C_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_C_tretji_nivo.txt")
+      podatki.odgovori_D_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_D_tretji_nivo.txt")
+      podatki.resitve_prvi_nivo = podatki.preberi_datoteko([], "resitve/resitve_prvi_nivo.txt")
+      podatki.resitve_drugi_nivo = podatki.preberi_datoteko([], "resitve/resitve_drugi_nivo.txt")
+      podatki.resitve_tretji_nivo = podatki.preberi_datoteko([], "resitve/resitve_tretji_nivo.txt")
    
    def vrni_pravilni_odgovor_prvi_nivo(self, vprasanje, izbira):
       pravilni_odgovor = ''
@@ -126,7 +126,7 @@ class grafika:
       x.destroy()
 
    def pozdravno_okno(self, zacetek, glasba):
-      ozadje = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadje = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
       ozadje_s_sliko = tk.Label(zacetek, image = ozadje)
       ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
       pozdrav = tk.Label(zacetek, text = "Pozdravljeni v igri Lepo je biti Milijonar!\nIgra je sestavljena iz treh nivojev težavnosti.\nPo vsakem doseženem nivoju, se lahko odločite,\n ali boste denar vzeli, ali igrali naprej.\nVeliko sreče!!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30) )
@@ -138,7 +138,7 @@ class grafika:
    def zmagovalno_okno(self,zmagovalno, opomba, naprej, glasba):
       opomba.destroy()
       naprej.destroy()
-      ozadjeozadja = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadjeozadja = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
       ozadje_s_slikoozadja = tk.Label(zmagovalno, image = ozadjeozadja)
       ozadje_s_slikoozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
       izhod1 = tk.Button(ozadje_s_slikoozadja, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zmagovalno))
@@ -150,7 +150,7 @@ class grafika:
    def vzemi_okno(self, vzemi, opomba, naprej, glasba, dobiček):
       opomba.destroy()
       naprej.destroy()
-      ozadjeozadja = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadjeozadja = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
       ozadje_s_slikoozadja = tk.Label(vzemi, image = ozadjeozadja)
       ozadje_s_slikoozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
       predčasno = tk.Label(vzemi, text = "Odločili ste se, da predčasno končate z igro.\nOsvojili ste " + str(dobiček) + "€, čestitke!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
@@ -164,7 +164,7 @@ class grafika:
    def poraz(self,zacetek, napacno, zakljuci):
       napacno.destroy()
       zakljuci.destroy()
-      ozadje = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadje = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
       ozadje_s_sliko = tk.Label(zacetek, image = ozadje)
       ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
       koncaj = tk.Label(zacetek, text = "Ostali ste brez nagrade, več sreče prihodnjič!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
@@ -355,17 +355,17 @@ class grafika:
 
    def zacni(self, zacetek,pozdrav,zacni, glasba):
       if (glasba == True):
-         winsound.PlaySound("Who Wants", winsound.SND_ALIAS | winsound.SND_ASYNC)
+         winsound.PlaySound("glasba/Who Wants", winsound.SND_ALIAS | winsound.SND_ASYNC)
          glasba = False
  
       
       
       pozdrav.destroy()
       zacni.destroy()
-      ozadje = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadje = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
       ozadje_s_sliko = tk.Label(zacetek, image = ozadje)
       ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-      lestvica = tk.PhotoImage(file = "Zajeta slika.gif")
+      lestvica = tk.PhotoImage(file = "ozadja/Zajeta slika.gif")
       ozadje_z_lestvico = tk.Label(ozadje_s_sliko, image = lestvica)
       ozadje_z_lestvico.place(x = 50, y = 250)
       vprasanje_indeks = grafika.izberi_novo_vprasanje(self)
@@ -375,10 +375,10 @@ class grafika:
       gumb.place(relx = .1, rely = .1, anchor = "center")
       nepolovic = tk.Label(zacetek)
       if (self.podatki.polovicka == True):
-         polovic = tk.PhotoImage(file = "polovicka.gif")
+         polovic = tk.PhotoImage(file = "ozadja/polovicka.gif")
          gumb.config(image = polovic)
       else:
-         nepolovic = tk.PhotoImage(file = "nepolovicka.gif")
+         nepolovic = tk.PhotoImage(file = "ozadja/nepolovicka.gif")
          nepol = tk.Label(zacetek, image = nepolovic)
          nepol.place(relx = .1, rely = .1, anchor = "center")
       print(grafika.stevilka_vprasanja)
@@ -429,7 +429,7 @@ class grafika:
       zacetek.mainloop()
 
 def ponovna_igra_fun(zakljucna):
-   glasba = "Who - Wants.wav"
+   glasba = "glasba/Who - Wants.wav"
    zazeni_glasbo = True
    winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
    sirina_okna = zakljucna.winfo_screenwidth()
@@ -440,7 +440,7 @@ def ponovna_igra_fun(zakljucna):
    vsebina1 = podatki(stevilka_vprasanja,zasluzeni_denar, polovicka)
    print(vsebina1.odgovori_A_prvi, vsebina1.odgovori_B_prvi, vsebina1.odgovori_C_prvi, vsebina1.odgovori_D_prvi) 
    vmesnik1 = grafika(sirina_okna, visina_okna, vsebina1, zakljucna, glasba, stevilka_vprasanja)
-   ozadje = tk.PhotoImage(file = "mil.gif")
+   ozadje = tk.PhotoImage(file = "ozadja/mil.gif")
    ozadje_s_sliko = tk.Label(zakljucna, image = ozadje)
    ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
    gumb_za_zacetek = tk.Button(zakljucna, text = "Začni z igro", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik1.zacni(zakljucna,gumb_za_zacetek, izhod, zazeni_glasbo))
@@ -452,7 +452,7 @@ def ponovna_igra_fun(zakljucna):
 def prva():
    okno =  tk.Tk()
    zazeni_glasbo = True
-   glasba = "Who - Wants.wav"
+   glasba = "glasba/Who - Wants.wav"
    winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
    sirina_okna = okno.winfo_screenwidth()
    visina_okna = okno.winfo_screenheight()
@@ -463,7 +463,7 @@ def prva():
    print(vsebina.odgovori_A_prvi, vsebina.odgovori_B_prvi, vsebina.odgovori_C_prvi, vsebina.odgovori_D_prvi)
    vmesnik = grafika(sirina_okna, visina_okna, vsebina, okno, glasba, stevilka_vprasanja)
    okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
-   ozadje = tk.PhotoImage(file = "mil.gif")
+   ozadje = tk.PhotoImage(file = "ozadja/mil.gif")
    ozadje_s_sliko = tk.Label(okno, image = ozadje)
    ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
    gumb_za_zacetek = tk.Button(okno, text = "Začni z igro",fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik.pozdravno_okno(okno, zazeni_glasbo))
