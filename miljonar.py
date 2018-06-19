@@ -125,39 +125,54 @@ class grafika:
       x.destroy()
 
    def pozdravno_okno(self, zacetek, glasba):
-      zacetek.destroy()
-      pozdravno = tk.Tk()
-      pozdravno.geometry("{0}x{1}+0+0".format(self.sirina_okna,self.visina_okna ))
       ozadje = tk.PhotoImage(file = "drugo_ozadje.gif")
-      ozadje_s_sliko = tk.Label(pozdravno, image = ozadje)
+      ozadje_s_sliko = tk.Label(zacetek, image = ozadje)
       ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-      pozdrav = tk.Label(pozdravno, text = "Pozdravljeni v igri Lepo je biti Milijonar!\nIgra je sestavljena iz treh nivojev težavnosti.\nPo vsakem doseženem nivoju, se lahko odločite,\n ali boste denar vzeli, ali igrali naprej.\nVeliko sreče!!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30) )
+      pozdrav = tk.Label(zacetek, text = "Pozdravljeni v igri Lepo je biti Milijonar!\nIgra je sestavljena iz treh nivojev težavnosti.\nPo vsakem doseženem nivoju, se lahko odločite,\n ali boste denar vzeli, ali igrali naprej.\nVeliko sreče!!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30) )
       pozdrav.place(relx = .5, rely = .4, anchor = "center")
-      začni = tk.Button(pozdravno, text = "Začni!",fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, pozdravno, glasba))
+      začni = tk.Button(zacetek, text = "Začni!",fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self,zacetek, pozdrav, začni, glasba))
       začni.place(relx = .5, rely = .7, anchor = "center")
-      pozdravno.mainloop()
+      zacetek.mainloop()
       
-   def zmagovalno_okno(self,zacetek):
-      zmagovalno = tk.Tk()
-      zacetek.destroy()
-      zmagovalno.geometry("{0}x{1}+0+0".format(self.sirina_okna,self.visina_okna ))
-      ozadje = tk.PhotoImage(file = "zmaga.gif")
-      ozadje_s_sliko = tk.Label(zmagovalno, image = ozadje)
-      ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-      zmagovalno.mainloop()
-      
-   def poraz(self,zacetek):
-      zakljucno = tk.Tk()
-      zacetek.destroy()
-      zakljucno.geometry("{0}x{1}+0+0".format(self.sirina_okna,self.visina_okna ))
-      zakljucno.configure(background = "deep sky blue")
-      koncaj = tk.Label(zakljucno, text = "Ostali ste brez nagrade, več sreče prihodnjič!", fg = "navy", font = ("Comic Sans MS", 30))
-      koncaj.place(relx = .5, rely = .4, anchor = "center")
-      izhod1 = tk.Button(zakljucno, text = "Izhod", fg = "navy", font = ("Comic Sans MS", 25), command = lambda: grafika.izhod__(self, zakljucno))
+   def zmagovalno_okno(self,zmagovalno, opomba, naprej, glasba):
+      opomba.destroy()
+      naprej.destroy()
+      ozadjeozadja = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadje_s_slikoozadja = tk.Label(zmagovalno, image = ozadjeozadja)
+      ozadje_s_slikoozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
+      izhod1 = tk.Button(ozadje_s_slikoozadja, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zmagovalno))
       izhod1.place(relx = .5, rely = .5, anchor = "center")
-      ponovna_igra = tk.Button(zakljucno, text = "Poskusi znova", fg = "navy", font = ("Comic Sans MS", 25), command = lambda : ponovna_igra_fun(zakljucno))
+      ponovna_igra = tk.Button(ozadje_s_slikoozadja, text = "Poskusi znova", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : ponovna_igra_fun(zmagovalno))
       ponovna_igra.place(relx = .5, rely = .6, anchor = "center")
-      zakljucno.mainloop()
+      zmagovalno.mainloop()
+
+   def vzemi_okno(self, vzemi, opomba, naprej, glasba, dobiček):
+      opomba.destroy()
+      naprej.destroy()
+      ozadjeozadja = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadje_s_slikoozadja = tk.Label(vzemi, image = ozadjeozadja)
+      ozadje_s_slikoozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
+      predčasno = tk.Label(vzemi, text = "Odločili ste se, da predčasno končate z igro.\nOsvojili ste " + str(dobiček) + "€, čestitke!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
+      predčasno.place(relx = .5, rely = .4, anchor = "center")
+      izhod1 = tk.Button(vzemi, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, vzemi))
+      izhod1.place(relx = .4, rely = .6, anchor = "center")
+      ponovna_igra = tk.Button(vzemi, text = "Igraj ponovno", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : ponovna_igra_fun(vzemi))
+      ponovna_igra.place(relx = .6, rely = .6, anchor = "center")
+      vzemi.mainloop()
+      
+   def poraz(self,zacetek, napacno, zakljuci):
+      napacno.destroy()
+      zakljuci.destroy()
+      ozadje = tk.PhotoImage(file = "drugo_ozadje.gif")
+      ozadje_s_sliko = tk.Label(zacetek, image = ozadje)
+      ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
+      koncaj = tk.Label(zacetek, text = "Ostali ste brez nagrade, več sreče prihodnjič!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
+      koncaj.place(relx = .5, rely = .4, anchor = "center")
+      izhod1 = tk.Button(zacetek, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zacetek))
+      izhod1.place(relx = .5, rely = .5, anchor = "center")
+      ponovna_igra = tk.Button(zacetek, text = "Poskusi znova", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : ponovna_igra_fun(zacetek))
+      ponovna_igra.place(relx = .5, rely = .6, anchor = "center")
+      zacetek.mainloop()
 
 
 
@@ -201,36 +216,42 @@ class grafika:
          
          napacno = tk.Label(zacetek, text = "Žal je vaš odgovor napačen, pravilen odgovor je:\n" + pravilni_odgovor, fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
          napacno.place(relx = .5 , rely = .4, anchor = "center")
-         zakljuci = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comis Sans MS", 30), command = lambda : grafika.poraz(self, zacetek) )
+         zakljuci = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comis Sans MS", 30), command = lambda : grafika.poraz(self, zacetek, napacno, zakljuci) )
          zakljuci.place(relx = .5 , rely = .6, anchor = "center")
          
       elif(izbira == pravilna_izbira):
          print(grafika.stevilka_vprasanja)
          print(self.podatki.nagrada)
          self.podatki.zasluzeni_denar = self.podatki.nagrada[grafika.stevilka_vprasanja-1]
-         if(grafika.stevilka_vprasanja == 5):
+         if(grafika.stevilka_vprasanja >= 5 and grafika.stevilka_vprasanja < 10 ):
             pravilno = tk.Label(zacetek, text = "Vaš odgovor je pravilen!\nZaslužili ste " + str(self.podatki.zasluzeni_denar) + " Eurov", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
             pravilno.place(relx = .5 , rely = .3, anchor = "center")
-            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek, self.glasba) )
-            naprej.place(relx = .5 , rely = .5, anchor = "center")
-            opomba = tk.Label(zacetek, text = "Prva stopnja opravljena!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 20) )
-            opomba.place(relx = .2, rely = .4, anchor = "center")
-         elif(grafika.stevilka_vprasanja == 10):
+            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek,pravilno,naprej, self.glasba) )
+            naprej.place(relx = .4 , rely = .5, anchor = "center")
+            vzemi = tk.Button(zacetek, text = "Vzemi 1000 € in končaj", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.vzemi_okno(self, zacetek,pravilno,naprej, self.glasba,1000) )
+            vzemi.place(relx = .6 , rely = .5, anchor = "center")
+            if(grafika.stevilka_vprasanja == 5):
+               opomba = tk.Label(zacetek, text = "Prva stopnja opravljena!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40) )
+               opomba.place(relx = .5, rely = .7, anchor = "center")
+         elif(grafika.stevilka_vprasanja >= 10 and grafika.stevilka_vprasanja < 15 ):
             pravilno = tk.Label(zacetek, text = "Vaš odgovor je pravilen!\nZaslužili ste " + str(self.podatki.zasluzeni_denar) + " Eurov", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
             pravilno.place(relx = .5 , rely = .3, anchor = "center")
-            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek, self.glasba) )
-            naprej.place(relx = .5 , rely = .5, anchor = "center")
-            opomba = tk.Label(zacetek, text = "Druga stopnja opravljena!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 20) )
-            opomba.place(relx = .2, rely = .4, anchor = "center")
+            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek,pravilno,naprej, self.glasba) )
+            naprej.place(relx = .4 , rely = .5, anchor = "center")
+            vzemi = tk.Button(zacetek, text = "Vzemi 32000 € in končaj", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.vzemi_okno(self, zacetek,pravilno,naprej, self.glasba,32000) )
+            vzemi.place(relx = .6 , rely = .5, anchor = "center")
+            if(grafika.stevilka_vprasanja == 10):
+               opomba = tk.Label(zacetek, text = "Druga stopnja opravljena!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40) )
+               opomba.place(relx = .5, rely = .7, anchor = "center")
          elif(grafika.stevilka_vprasanja == 15):
-            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zmagovalno_okno(self, zacetek, self.glasba) )
+            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zmagovalno_okno(self, zacetek,opomba,naprej, self.glasba) )
             naprej.place(relx = .5 , rely = .7, anchor = "center")
             opomba = tk.Label(zacetek, text = "Čestitke postali ste milijonar!!!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 50) )
             opomba.place(relx = .5, rely = .5, anchor = "center")
          else:
             pravilno = tk.Label(zacetek, text = "Vaš odgovor je pravilen!\nZaslužili ste " + str(self.podatki.zasluzeni_denar) + " Eurov", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
             pravilno.place(relx = .5 , rely = .3, anchor = "center")
-            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek, self.glasba) )
+            naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek,pravilno,naprej, self.glasba) )
             naprej.place(relx = .5 , rely = .5, anchor = "center")
          grafika.stevilka_vprasanja = grafika.stevilka_vprasanja +1
          
@@ -257,14 +278,13 @@ class grafika:
          seznam[1] = vprasanje;
       return seznam
 
-   def zacni(self, okno, glasba):
+   def zacni(self, zacetek,pozdrav,zacni, glasba):
       if (glasba == True):
          winsound.PlaySound("Who Wants", winsound.SND_ALIAS | winsound.SND_ASYNC)
          glasba = False
       
-      okno.destroy()
-      zacetek = tk.Tk()
-      zacetek.geometry("{0}x{1}+0+0".format(self.sirina_okna,self.visina_okna ))
+      pozdrav.destroy()
+      zacni.destroy()
       ozadje = tk.PhotoImage(file = "drugo_ozadje.gif")
       ozadje_s_sliko = tk.Label(zacetek, image = ozadje)
       ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)  
@@ -319,27 +339,24 @@ class grafika:
       zacetek.mainloop()
 
 def ponovna_igra_fun(zakljucna):
-   zakljucna.destroy()
-   okno =  tk.Tk()
    glasba = "Who - Wants.wav"
    zazeni_glasbo = True
    winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
-   sirina_okna = okno.winfo_screenwidth()
-   visina_okna = okno.winfo_screenheight()
+   sirina_okna = zakljucna.winfo_screenwidth()
+   visina_okna = zakljucna.winfo_screenheight()
    zasluzeni_denar = 0
    stevilka_vprasanja = 1
    vsebina1 = podatki(stevilka_vprasanja,zasluzeni_denar)
    print(vsebina1.odgovori_A_prvi, vsebina1.odgovori_B_prvi, vsebina1.odgovori_C_prvi, vsebina1.odgovori_D_prvi)
-   vmesnik1 = grafika(sirina_okna, visina_okna, vsebina1, okno, glasba, stevilka_vprasanja)
-   okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
+   vmesnik1 = grafika(sirina_okna, visina_okna, vsebina1, zakljucna, glasba, stevilka_vprasanja)
    ozadje = tk.PhotoImage(file = "mil.gif")
-   ozadje_s_sliko = tk.Label(okno, image = ozadje)
+   ozadje_s_sliko = tk.Label(zakljucna, image = ozadje)
    ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-   gumb_za_zacetek = tk.Button(okno, text = "Začni z igro", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik1.zacni(okno, zazeni_glasbo))
+   gumb_za_zacetek = tk.Button(zakljucna, text = "Začni z igro", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik1.zacni(zakljucna,gumb_za_zacetek, izhod, zazeni_glasbo))
    gumb_za_zacetek.place(relx = .1, rely = .5 , anchor = "center")
-   izhod = tk.Button(okno, text = "Ne upam :(", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik1.izhod__(okno))
+   izhod = tk.Button(zakljucna, text = "Ne upam :(", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik1.izhod__(zakljucna))
    izhod.place(relx = .9, rely = .5 , anchor = "center")
-   okno.mainloop()
+   zakljucna.mainloop()
 
 def prva():
    okno =  tk.Tk()
