@@ -1,6 +1,6 @@
 a
-b
-b
+a
+d
 a
 d
 b
@@ -10,7 +10,7 @@ b
 a
 c
 a
-a
+c
 c
 b
 c
