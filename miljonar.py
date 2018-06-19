@@ -31,7 +31,8 @@ class podatki:
             seznam.append(vrstica.strip())
       return seznam
    
-   def __init__(self, stevilka_vprasanja, zasluzeni_denar):
+   def __init__(self, stevilka_vprasanja, zasluzeni_denar, polovicka):
+      self.polovicka = polovicka
       self.stevilka_vprasanja = stevilka_vprasanja
       self.zasluzeni_denar = zasluzeni_denar
       podatki.nagrada = [100 , 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 1000000]
@@ -278,22 +279,111 @@ class grafika:
          seznam[1] = vprasanje;
       return seznam
 
+   def pokrij(pravilna_izbira):
+      odkrita=['','']
+      izberi = random.randint(1,3)
+      if (pravilna_izbira == 'a'): 
+         if (izberi == 1):
+            odkrita = ['a','b']
+            grafika.seznam_gumbov[2].place_forget()
+            grafika.seznam_gumbov[3].place_forget()
+         elif (izberi == 2):
+            odkrita = ['a','c']
+            grafika.seznam_gumbov[1].place_forget()
+            grafika.seznam_gumbov[3].place_forget()
+         elif (izberi == 3):
+            odkrita = ['a','d']
+            grafika.seznam_gumbov[1].place_forget()
+            grafika.seznam_gumbov[2].place_forget()
+      elif (pravilna_izbira == 'b'): 
+         if (izberi == 1):
+            odkrita = ['b','a']
+            grafika.seznam_gumbov[2].place_forget()
+            grafika.seznam_gumbov[3].place_forget()
+         elif (izberi == 2):
+            odkrita = ['b','c']
+            grafika.seznam_gumbov[0].place_forget()
+            grafika.seznam_gumbov[3].place_forget()
+         elif (izberi == 3):
+            odkrita = ['b','d']
+            grafika.seznam_gumbov[0].place_forget()
+            grafika.seznam_gumbov[2].place_forget()
+      elif (pravilna_izbira == 'c'): 
+         if (izberi == 1):
+            odkrita = ['c','a']
+            grafika.seznam_gumbov[1].place_forget()
+            grafika.seznam_gumbov[3].place_forget()
+         elif (izberi == 2):
+            odkrita = ['c','b']
+            grafika.seznam_gumbov[0].place_forget()
+            grafika.seznam_gumbov[3].place_forget()
+         elif (izberi == 3):
+            odkrita = ['c','d']
+            grafika.seznam_gumbov[0].place_forget()
+            grafika.seznam_gumbov[1].place_forget()
+      elif (pravilna_izbira == 'd'): 
+         if (izberi == 1):
+            odkrita = ['d','a']
+            grafika.seznam_gumbov[1].place_forget()
+            grafika.seznam_gumbov[2].place_forget()
+         elif (izberi == 2):
+            odkrita = ['d','b']
+            grafika.seznam_gumbov[0].place_forget()
+            grafika.seznam_gumbov[2].place_forget()
+         elif (izberi == 3):
+            odkrita = ['d','c']
+            grafika.seznam_gumbov[0].place_forget()
+            grafika.seznam_gumbov[1].place_forget()
+
+      return odkrita
+      
+
+   def izkoristi_polovicko(self,vprasanje):
+      pravilna_izbira = ''
+      if(grafika.stevilka_vprasanja <= 5):
+         pravilna_izbira = self.podatki.resitve_prvi_nivo[vprasanje]
+      elif(grafika.stevilka_vprasanja > 5 and grafika.stevilka_vprasanja <= 10):
+         pravilna_izbira = self.podatki.resitve_drugi_nivo[vprasanje]
+      elif(grafika.stevilka_vprasanja > 10):
+         pravilna_izbira = self.podatki.resitve_tretji_nivo[vprasanje]
+      
+      odkriti_par = grafika.pokrij(pravilna_izbira)
+      self.podatki.polovicka = False
+      
+      
+      
+
    def zacni(self, zacetek,pozdrav,zacni, glasba):
       if (glasba == True):
          winsound.PlaySound("Who Wants", winsound.SND_ALIAS | winsound.SND_ASYNC)
          glasba = False
+ 
+      
       
       pozdrav.destroy()
       zacni.destroy()
       ozadje = tk.PhotoImage(file = "drugo_ozadje.gif")
       ozadje_s_sliko = tk.Label(zacetek, image = ozadje)
-      ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)  
-      print(grafika.stevilka_vprasanja)
-      
+      ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
+      lestvica = tk.PhotoImage(file = "Zajeta slika.gif")
+      ozadje_z_lestvico = tk.Label(ozadje_s_sliko, image = lestvica)
+      ozadje_z_lestvico.place(x = 50, y = 250)
       vprasanje_indeks = grafika.izberi_novo_vprasanje(self)
-      
       vprasanje = vprasanje_indeks[1]
       indeks = int(vprasanje_indeks[0])
+      gumb = tk.Button(zacetek, command = lambda : grafika.izkoristi_polovicko(self,indeks))
+      gumb.place(relx = .1, rely = .1, anchor = "center")
+      nepolovic = tk.Label(zacetek)
+      if (self.podatki.polovicka == True):
+         polovic = tk.PhotoImage(file = "polovicka.gif")
+         gumb.config(image = polovic)
+      else:
+         nepolovic = tk.PhotoImage(file = "nepolovicka.gif")
+         nepol = tk.Label(zacetek, image = nepolovic)
+         nepol.place(relx = .1, rely = .1, anchor = "center")
+      print(grafika.stevilka_vprasanja)
+      
+      
       novo = tk.Label(zacetek, text = vprasanje, fg = "white", bg = "grey6", font = ("Comic Sans MS", 30))
       novo.place(relx = .5, rely = .2, anchor = "center")
       if(grafika.stevilka_vprasanja <= 5):
@@ -346,8 +436,9 @@ def ponovna_igra_fun(zakljucna):
    visina_okna = zakljucna.winfo_screenheight()
    zasluzeni_denar = 0
    stevilka_vprasanja = 1
-   vsebina1 = podatki(stevilka_vprasanja,zasluzeni_denar)
-   print(vsebina1.odgovori_A_prvi, vsebina1.odgovori_B_prvi, vsebina1.odgovori_C_prvi, vsebina1.odgovori_D_prvi)
+   polovicka = True
+   vsebina1 = podatki(stevilka_vprasanja,zasluzeni_denar, polovicka)
+   print(vsebina1.odgovori_A_prvi, vsebina1.odgovori_B_prvi, vsebina1.odgovori_C_prvi, vsebina1.odgovori_D_prvi) 
    vmesnik1 = grafika(sirina_okna, visina_okna, vsebina1, zakljucna, glasba, stevilka_vprasanja)
    ozadje = tk.PhotoImage(file = "mil.gif")
    ozadje_s_sliko = tk.Label(zakljucna, image = ozadje)
@@ -367,7 +458,8 @@ def prva():
    visina_okna = okno.winfo_screenheight()
    zasluzeni_denar = 0
    stevilka_vprasanja = 1
-   vsebina = podatki(stevilka_vprasanja,zasluzeni_denar)
+   polovicka = True
+   vsebina = podatki(stevilka_vprasanja,zasluzeni_denar, polovicka)
    print(vsebina.odgovori_A_prvi, vsebina.odgovori_B_prvi, vsebina.odgovori_C_prvi, vsebina.odgovori_D_prvi)
    vmesnik = grafika(sirina_okna, visina_okna, vsebina, okno, glasba, stevilka_vprasanja)
    okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
