@@ -1,0 +1,6 @@
+Prvi nivo
+Koliko znakov uporablja binarni številski sistem?
+3
+10
+6
+***2

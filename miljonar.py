@@ -24,36 +24,86 @@ class podatki:
    resitve_prvi_nivo = []
    resitve_drugi_nivo = []
    resitve_tretji_nivo = []
-
-   def preberi_datoteko( seznam, ime):
-      with open(ime, "r", encoding = "utf-8") as file:
-         for vrstica in file:
-            seznam.append(vrstica.strip())
-      return seznam
+   stevilo_vprasanj = 0
    
-   def __init__(self, stevilka_vprasanja, zasluzeni_denar, polovicka):
+
+   def ustvari_datoteko():
+      for index in range(0, 20):
+         
+         ime = str(index+40) + "_vprasanje_in_odgovori.txt"
+         with open(ime, 'a', encoding = "utf-8") as file:
+            file.write('Tretji nivo\n')
+            file.write(podatki.vprasanja_tretji_nivo[index]+'\n')
+            if(podatki.resitve_tretji_nivo[index] == 'a'):
+               file.write('***' + podatki.odgovori_A_tretji[index]+ '\n')
+            else:
+               file.write(podatki.odgovori_A_tretji[index]+ '\n')
+            if(podatki.resitve_tretji_nivo[index] == 'b'):
+               file.write('***' + podatki.odgovori_B_tretji[index]+ '\n')
+            else:
+               file.write(podatki.odgovori_B_tretji[index]+ '\n')
+            if(podatki.resitve_tretji_nivo[index] == 'c'):
+               file.write('***' + podatki.odgovori_C_tretji[index]+ '\n')
+            else:
+               file.write(podatki.odgovori_C_tretji[index]+ '\n')
+            if(podatki.resitve_tretji_nivo[index] == 'd'):
+               file.write('***' + podatki.odgovori_D_tretji[index])
+            else:
+               file.write(podatki.odgovori_D_tretji[index])
+            
+            
+   
+   def prepisi_v_seznam(datoteka,vprasanja, odgovoriA, odgovoriB, odgovoriC, odgovoriD, resitve):
+     
+      for i, vrstica in enumerate(datoteka):
+         
+         if i == 0:
+            vprasanja.append(vrstica.strip())
+         elif i == 1:
+            if '***' in vrstica:
+               resitve.append('a')
+            odgovoriA.append(vrstica.strip('***''\n'))
+         elif i == 2:
+            if '***' in vrstica:
+              resitve.append('b')
+            odgovoriB.append(vrstica.strip('***''\n'))
+         elif i == 3:
+            if '***' in vrstica:
+               resitve.append('c')
+            odgovoriC.append(vrstica.strip('***''\n'))
+         elif i == 4:
+            if '***' in vrstica:
+               resitve.append('d')
+            odgovoriD.append(vrstica.strip('***'))
+
+      
+      
+
+   
+   def preberi_datoteko(self):
+      for index_vprasanja in range(0, podatki.stevilo_vprasanj):
+         ime_datoteke = str(index_vprasanja) + '_vprasanje_in_odgovori.txt'
+         file = open("vprasanja_in_odgovori/"+ime_datoteke, "r", encoding = "utf-8")
+      
+         prva_vrstica = file.readline().strip()
+
+         if prva_vrstica == "Prvi nivo":
+            podatki.prepisi_v_seznam(file, podatki.vprasanja_prvi_nivo, podatki.odgovori_A_prvi, podatki.odgovori_B_prvi, podatki.odgovori_C_prvi, podatki.odgovori_D_prvi, podatki.resitve_prvi_nivo)
+         elif prva_vrstica == "Drugi nivo":
+            podatki.prepisi_v_seznam(file, podatki.vprasanja_drugi_nivo, podatki.odgovori_A_drugi, podatki.odgovori_B_drugi, podatki.odgovori_C_drugi, podatki.odgovori_D_drugi, podatki.resitve_drugi_nivo)
+         elif prva_vrstica == "Tretji nivo":
+            podatki.prepisi_v_seznam(file, podatki.vprasanja_tretji_nivo, podatki.odgovori_A_tretji, podatki.odgovori_B_tretji, podatki.odgovori_C_tretji, podatki.odgovori_D_tretji, podatki.resitve_tretji_nivo)
+         file.close()          
+               
+      
+   
+   def __init__(self, stevilka_vprasanja, zasluzeni_denar, polovicka, stevilo_vprasanj):
+      podatki.stevilo_vprasanj = stevilo_vprasanj
       self.polovicka = polovicka
       self.stevilka_vprasanja = stevilka_vprasanja
       self.zasluzeni_denar = zasluzeni_denar
       podatki.nagrada = [100 , 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 1000000]
-      podatki.vprasanja_prvi_nivo = podatki.preberi_datoteko([], "vprasanja/vprasanja_prvi_nivo.txt")
-      podatki.vprasanja_drugi_nivo = podatki.preberi_datoteko([], "vprasanja/vprasanja_drugi_nivo.txt")
-      podatki.vprasanja_tretji_nivo = podatki.preberi_datoteko([], "vprasanja/vprasanja_tretji_nivo.txt")
-      podatki.odgovori_A_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_A_prvi_nivo.txt")
-      podatki.odgovori_B_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_B_prvi_nivo.txt")
-      podatki.odgovori_C_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_C_prvi_nivo.txt")
-      podatki.odgovori_D_prvi = podatki.preberi_datoteko([], "odgovori/prvi_nivo/odgovori_D_prvi_nivo.txt")
-      podatki.odgovori_A_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_A_drugi_nivo.txt")
-      podatki.odgovori_B_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_B_drugi_nivo.txt")
-      podatki.odgovori_C_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_C_drugi_nivo.txt")
-      podatki.odgovori_D_drugi = podatki.preberi_datoteko([], "odgovori/drugi_nivo/odgovori_D_drugi_nivo.txt")
-      podatki.odgovori_A_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_A_tretji_nivo.txt")
-      podatki.odgovori_B_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_B_tretji_nivo.txt")
-      podatki.odgovori_C_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_C_tretji_nivo.txt")
-      podatki.odgovori_D_tretji = podatki.preberi_datoteko([], "odgovori/tretji_nivo/odgovori_D_tretji_nivo.txt")
-      podatki.resitve_prvi_nivo = podatki.preberi_datoteko([], "resitve/resitve_prvi_nivo.txt")
-      podatki.resitve_drugi_nivo = podatki.preberi_datoteko([], "resitve/resitve_drugi_nivo.txt")
-      podatki.resitve_tretji_nivo = podatki.preberi_datoteko([], "resitve/resitve_tretji_nivo.txt")
+      podatki.preberi_datoteko(self)     # podatki.ustvari_datoteko()
    
    def vrni_pravilni_odgovor_prvi_nivo(self, vprasanje, izbira):
       pravilni_odgovor = ''
@@ -143,7 +193,7 @@ class grafika:
       ozadje_s_slikoozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
       izhod1 = tk.Button(ozadje_s_slikoozadja, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zmagovalno))
       izhod1.place(relx = .5, rely = .5, anchor = "center")
-      ponovna_igra = tk.Button(ozadje_s_slikoozadja, text = "Poskusi znova", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : ponovna_igra_fun(zmagovalno))
+      ponovna_igra = tk.Button(ozadje_s_slikoozadja, text = "Poskusi znova", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : prva(zmagovalno))
       ponovna_igra.place(relx = .5, rely = .6, anchor = "center")
       zmagovalno.mainloop()
 
@@ -157,7 +207,7 @@ class grafika:
       predčasno.place(relx = .5, rely = .4, anchor = "center")
       izhod1 = tk.Button(vzemi, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, vzemi))
       izhod1.place(relx = .4, rely = .6, anchor = "center")
-      ponovna_igra = tk.Button(vzemi, text = "Igraj ponovno", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : ponovna_igra_fun(vzemi))
+      ponovna_igra = tk.Button(vzemi, text = "Igraj ponovno", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : prva(vzemi))
       ponovna_igra.place(relx = .6, rely = .6, anchor = "center")
       vzemi.mainloop()
       
@@ -171,7 +221,7 @@ class grafika:
       koncaj.place(relx = .5, rely = .4, anchor = "center")
       izhod1 = tk.Button(zacetek, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zacetek))
       izhod1.place(relx = .5, rely = .5, anchor = "center")
-      ponovna_igra = tk.Button(zacetek, text = "Poskusi znova", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : ponovna_igra_fun(zacetek))
+      ponovna_igra = tk.Button(zacetek, text = "Poskusi znova", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : prva(zacetek))
       ponovna_igra.place(relx = .5, rely = .6, anchor = "center")
       zacetek.mainloop()
 
@@ -351,15 +401,16 @@ class grafika:
       self.podatki.polovicka = False
       
       
+   
+
       
 
+   
    def zacni(self, zacetek,pozdrav,zacni, glasba):
       if (glasba == True):
          winsound.PlaySound("glasba/Who Wants", winsound.SND_ALIAS | winsound.SND_ASYNC)
          glasba = False
  
-      
-      
       pozdrav.destroy()
       zacni.destroy()
       ozadje = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
@@ -428,29 +479,9 @@ class grafika:
        
       zacetek.mainloop()
 
-def ponovna_igra_fun(zakljucna):
-   glasba = "glasba/Who - Wants.wav"
-   zazeni_glasbo = True
-   winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
-   sirina_okna = zakljucna.winfo_screenwidth()
-   visina_okna = zakljucna.winfo_screenheight()
-   zasluzeni_denar = 0
-   stevilka_vprasanja = 1
-   polovicka = True
-   vsebina1 = podatki(stevilka_vprasanja,zasluzeni_denar, polovicka)
-   print(vsebina1.odgovori_A_prvi, vsebina1.odgovori_B_prvi, vsebina1.odgovori_C_prvi, vsebina1.odgovori_D_prvi) 
-   vmesnik1 = grafika(sirina_okna, visina_okna, vsebina1, zakljucna, glasba, stevilka_vprasanja)
-   ozadje = tk.PhotoImage(file = "ozadja/mil.gif")
-   ozadje_s_sliko = tk.Label(zakljucna, image = ozadje)
-   ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-   gumb_za_zacetek = tk.Button(zakljucna, text = "Začni z igro", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik1.zacni(zakljucna,gumb_za_zacetek, izhod, zazeni_glasbo))
-   gumb_za_zacetek.place(relx = .1, rely = .5 , anchor = "center")
-   izhod = tk.Button(zakljucna, text = "Ne upam :(", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik1.izhod__(zakljucna))
-   izhod.place(relx = .9, rely = .5 , anchor = "center")
-   zakljucna.mainloop()
 
-def prva():
-   okno =  tk.Tk()
+
+def prva(okno):
    zazeni_glasbo = True
    glasba = "glasba/Who - Wants.wav"
    winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
@@ -459,7 +490,7 @@ def prva():
    zasluzeni_denar = 0
    stevilka_vprasanja = 1
    polovicka = True
-   vsebina = podatki(stevilka_vprasanja,zasluzeni_denar, polovicka)
+   vsebina = podatki(stevilka_vprasanja,zasluzeni_denar, polovicka, 60)
    print(vsebina.odgovori_A_prvi, vsebina.odgovori_B_prvi, vsebina.odgovori_C_prvi, vsebina.odgovori_D_prvi)
    vmesnik = grafika(sirina_okna, visina_okna, vsebina, okno, glasba, stevilka_vprasanja)
    okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
@@ -472,4 +503,5 @@ def prva():
    izhod.place(relx = .9, rely = .5 , anchor = "center")
    okno.mainloop()
 
-prva()
+okno = tk.Tk()
+prva(okno)

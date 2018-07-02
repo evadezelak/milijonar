@@ -1,0 +1,6 @@
+Prvi nivo
+Kako izračunamo obseg trikotnika?
+***a + b + c
+2 x (a + b)
+a x b
+a x b x c
