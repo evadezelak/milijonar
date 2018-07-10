@@ -1,9 +1,13 @@
+
 import tkinter as tk
 from tkinter import *
 import random
+import math
 import time
 import winsound
 import os, sys
+from PIL import Image, ImageTk
+
 
 class podatki:
    nagrada = []
@@ -19,8 +23,8 @@ class podatki:
             return dolzina
       
    def dodaj_datoteke_v_seznam():
-      direktorij = os.listdir("vprasanja_in_odgovori/")
-      for datoteka in direktorij:
+      mapa = os.listdir("vprasanja_in_odgovori/")
+      for datoteka in mapa:
          podatki.seznam_datotek.append(datoteka)
       podatki.seznam_datotek.sort(key = lambda f : int(''.join(filter(str.isdigit, f))))
       dolzina_stevk = podatki.preveri_dolzino_stevk()
@@ -45,13 +49,15 @@ class grafika:
    visina_okna = -1
    seznam_gumbov = []
 
-   def __init__(self, sirina_okna, visina_okna, podatki, okno, glasba, stevilka_vprasanja):
+   def __init__(self, sirina_okna, visina_okna, podatki, okno, glasba, stevilka_vprasanja, ozadje, ozadje_s_sliko):
       self.sirina_okna = sirina_okna
       self.visina_okna = visina_okna
       self.podatki = podatki
       self.okno = okno
       self.glasba = glasba
       grafika.stevilka_vprasanja = stevilka_vprasanja
+      self.ozadje = ozadje
+      self.ozadje_s_sliko = ozadje_s_sliko
 
    def izhod__(self,x):
       winsound.PlaySound(None, winsound.SND_PURGE) ##da izklopimo glasbo ob izhodu iz aplikacije
@@ -109,9 +115,9 @@ class grafika:
 
 
    def vrni_pravilni_odgovor(self, vprasanje_in_odgovori):
-      for vprasanje in vprasanje_in_odgovori:
-         if "***" in vprasanje:
-            return vprasanje.strip('***\n')
+      for odgovor in vprasanje_in_odgovori:
+         if "***" in odgovor:
+            return odgovor.strip('***\n')
    
 
    def uniči_gumbe():
@@ -177,16 +183,16 @@ class grafika:
          return grafika.izberi_ustrezno_vprasanje(self, nivo)
       ime = str(indeks_vprasanja) + "_vprasanje_in_odgovori.txt"
       nivo_vprasanja = ''
-      file = open("vprasanja_in_odgovori/" + ime, 'r', encoding = "utf-8")
-      vrstice = file.readlines()
-      nivo_vprasanja = vrstice[0].strip()
-      if(nivo_vprasanja != nivo):
-         file.close()
-         return grafika.izberi_ustrezno_vprasanje(self, nivo)
-      else:
-         file.close()
-         self.podatki.seznam_datotek[indeks_vprasanja] = 'X'
-         return vrstice
+      with open("vprasanja_in_odgovori/" + ime, 'r', encoding = "utf-8") as file:
+         vrstice = file.readlines()
+         nivo_vprasanja = vrstice[0].strip()
+         if(nivo_vprasanja != nivo):
+            
+            return grafika.izberi_ustrezno_vprasanje(self, nivo)
+         else:
+            
+            self.podatki.seznam_datotek[indeks_vprasanja] = 'X'
+            return vrstice
       
    def izberi_novo_vprasanje(self):
       vprasanje_in_odgovori = []
@@ -196,7 +202,6 @@ class grafika:
          vprasanje_in_odgovori = grafika.izberi_ustrezno_vprasanje(self, "Drugi nivo")
       elif(grafika.stevilka_vprasanja > 10):
          vprasanje_in_odgovori = grafika.izberi_ustrezno_vprasanje(self, "Tretji nivo")
-      print(vprasanje_in_odgovori)
       return vprasanje_in_odgovori
 
    def pokrij(pravilni_odgovor, vprasanje_in_odgovori):
@@ -216,6 +221,16 @@ class grafika:
       grafika.pokrij(pravilni_odgovor, vprasanje_in_odgovori)
       self.podatki.polovicka = False
       
+   
+   def naredi_gumb(self, st_odgovora, vprasanje_in_odgovori, zacetek, novo):
+         besedilo = vprasanje_in_odgovori[st_odgovora].strip('***\n')
+         ukaz = lambda: grafika.preveri_odgovor(self, vprasanje_in_odgovori,zacetek, st_odgovora,novo)
+         gumb = tk.Button(zacetek, text = besedilo, fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = ukaz)
+         polozaj = {2 : (0.4, 0.4), 3 : (0.6, 0.4), 4: (0.4, 0.5), 5: (0.6, 0.5)}
+         gumb.place(relx = polozaj[st_odgovora][0], rely = polozaj[st_odgovora][1], anchor = "center")
+         return gumb
+
+   
    
    def zacni(self, zacetek,pozdrav,zacni, glasba):
       if (glasba == True):
@@ -242,43 +257,41 @@ class grafika:
          nepolovic = tk.PhotoImage(file = "ozadja/nepolovicka.gif")
          nepol = tk.Label(zacetek, image = nepolovic)
          nepol.place(relx = .1, rely = .1, anchor = "center")
-      print(grafika.stevilka_vprasanja)
       
       
       novo = tk.Label(zacetek, text = vprasanje, fg = "white", bg = "grey6", font = ("Comic Sans MS", 30))
       novo.place(relx = .5, rely = .2, anchor = "center")
-      
-      A = tk.Button(zacetek, text = vprasanje_in_odgovori[2].strip('***\n'), fg = "white", bg = "grey6", activebackground = "blue",  font = ("Comic Sans MS", 30), command = lambda: grafika.preveri_odgovor(self, vprasanje_in_odgovori,zacetek, 2,novo))
-      B = tk.Button(zacetek, text = vprasanje_in_odgovori[3].strip('***\n'), fg = "white", bg = "grey6", font = ("Comic Sans MS", 30),command = lambda: grafika.preveri_odgovor(self, vprasanje_in_odgovori,zacetek, 3,novo))
-      C = tk.Button(zacetek, text = vprasanje_in_odgovori[4].strip('***\n'), fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.preveri_odgovor(self, vprasanje_in_odgovori,zacetek, 4,novo))
-      D = tk.Button(zacetek, text = vprasanje_in_odgovori[5].strip('***\n'), fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.preveri_odgovor(self, vprasanje_in_odgovori,zacetek, 5,novo))
-      grafika.seznam_gumbov.append(A)
-      grafika.seznam_gumbov.append(B)
-      grafika.seznam_gumbov.append(C)
-      grafika.seznam_gumbov.append(D)
-      grafika.seznam_gumbov[0].place(relx = .4, rely = .4, anchor = "center")
-      grafika.seznam_gumbov[1].place(relx = .6, rely = .4, anchor = "center")
-      grafika.seznam_gumbov[2].place(relx = .4, rely = .5, anchor = "center")
-      grafika.seznam_gumbov[3].place(relx = .6, rely = .5, anchor = "center")
+      grafika.seznam_gumbov = [grafika.naredi_gumb(self, st, vprasanje_in_odgovori, zacetek, novo) for st in [2, 3, 4, 5]]
       zacetek.mainloop()
 
+   def nastavi_ozadje(self, event):
+      nova_sirina = event.width
+      nova_visina = event.height
+      slika = self.ozadje.resize((nova_sirina, nova_visina))
+      photo = ImageTk.PhotoImage(slika)
+      self.ozadje_s_sliko.config(image = photo)
+      self.ozadje_s_sliko.image = photo
 
 
 def prva(okno):
+   #okno.resizable(width= False, height = False)
    zazeni_glasbo = True
    glasba = "glasba/Who - Wants.wav"
    winsound.PlaySound(glasba, winsound.SND_ALIAS | winsound.SND_ASYNC)
    sirina_okna = okno.winfo_screenwidth()
    visina_okna = okno.winfo_screenheight()
+   okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
    zasluzeni_denar = 0
    stevilka_vprasanja = 1
    polovicka = True
+   ozadje = Image.open("ozadja/mil.gif")
+   kopija = ozadje.copy()
+   photo = ImageTk.PhotoImage(ozadje)
+   ozadje_s_sliko = tk.Label(okno, image = photo)
    vsebina = podatki(stevilka_vprasanja,zasluzeni_denar, polovicka)
-   vmesnik = grafika(sirina_okna, visina_okna, vsebina, okno, glasba, stevilka_vprasanja)
-   okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
-   ozadje = tk.PhotoImage(file = "ozadja/mil.gif")
-   ozadje_s_sliko = tk.Label(okno, image = ozadje)
-   ozadje_s_sliko.place(x = 0, y = 0, relwidth = 1, relheight = 1)
+   vmesnik = grafika(sirina_okna, visina_okna, vsebina, okno, glasba, stevilka_vprasanja, kopija, ozadje_s_sliko)
+   ozadje_s_sliko.bind('<Configure>', vmesnik.nastavi_ozadje)
+   ozadje_s_sliko.pack(fill = BOTH, expand = YES)
    gumb_za_zacetek = tk.Button(okno, text = "Začni z igro",fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik.pozdravno_okno(okno, zazeni_glasbo))
    gumb_za_zacetek.place(relx = .1, rely = .5 , anchor = "center")
    izhod = tk.Button(okno, text = "Ne upam :(", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40  ), command = lambda: vmesnik.izhod__(okno))
