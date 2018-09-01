@@ -86,10 +86,10 @@ class grafika:
       ozadjeozadja = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
       ozadje_s_slikoozadja = tk.Label(zmagovalno, image = ozadjeozadja)
       ozadje_s_slikoozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
-      izhod1 = tk.Button(ozadje_s_slikoozadja, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zmagovalno))
-      izhod1.grid(sticky = W+E, row = 0, pady = 300)
-      ponovna_igra = tk.Button(ozadje_s_slikoozadja, text = "Igraj ponovno", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.pred_ponovno_igro_uniči_prejšne_widgete(self, zmagovalno))
-      ponovna_igra.grid(row = 1, sticky = W+E)
+      izhod1 = tk.Button(zmagovalno, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zmagovalno))
+      izhod1.grid(sticky = S+W+E, row = 1, pady = 100)
+      ponovna_igra = tk.Button(zmagovalno, text = "Igraj ponovno", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.pred_ponovno_igro_uniči_prejšne_widgete(self, zmagovalno))
+      ponovna_igra.grid(row = 0, sticky = N+W+E, pady = 300)
       self.dodaj_na_seznam_widgetov(ozadje_s_slikoozadja, izhod1, ponovna_igra)
       zmagovalno.mainloop()
 
@@ -101,16 +101,16 @@ class grafika:
       ozadje_s_slikoozadja.place(x = 0, y = 0, relwidth = 1, relheight = 1)
       predčasno = tk.Label(vzemi, text = "Odločili ste se, da predčasno končate z igro.\nOsvojili ste " + str(dobiček) + "€, čestitke!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
       predčasno.grid(sticky = N , pady = 100, columnspan = 2)
-      izhod1 = tk.Button(vzemi, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, vzemi))
-      izhod1.grid(sticky = W, row = 0, padx = 600)
-      ponovna_igra = tk.Button(vzemi, text = "Igraj ponovno", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.pred_ponovno_igro_uniči_prejšne_widgete(self, vzemi))
-      ponovna_igra.grid(sticky = E, row = 0 , padx = 600)
+      izhod1 = tk.Button(vzemi, text = "Izhod", fg = "white", bg = "grey6",  width = 15, height = 2, font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, vzemi))
+      izhod1.grid(sticky = W, row = 0,  padx = 500)
+      ponovna_igra = tk.Button(vzemi, text = "Igraj ponovno", fg = "white", width = 15, height = 2,  bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.pred_ponovno_igro_uniči_prejšne_widgete(self, vzemi))
+      ponovna_igra.grid(sticky = E, row = 0,    padx = 500)
       self.dodaj_na_seznam_widgetov(ozadje_s_slikoozadja, predčasno, izhod1, ponovna_igra)
       vzemi.mainloop()
       
    def poraz(self,zacetek, okvir_za_gumbe):
       
-     # Grid.columnconfigure(zacetek,1, weight = 1)
+      Grid.columnconfigure(zacetek,1, weight = 0)
       okvir_za_gumbe.destroy()
       self.uniči_gumbe(self.seznam_widgetov)
       ozadje = tk.PhotoImage(file = "ozadja/drugo_ozadje.gif")
@@ -119,9 +119,9 @@ class grafika:
       koncaj = tk.Label(zacetek, text = "Ostali ste brez nagrade, več sreče prihodnjič!", fg = "white", bg = "grey6", font = ("Comic Sans MS", 40))
       koncaj.grid(sticky = N, row = 0, columnspan = 2, pady = 50 )
       izhod1 = tk.Button(zacetek, text = "Izhod", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda: grafika.izhod__(self, zacetek), width = 15, height = 2)
-      izhod1.grid(sticky = W , row = 0, column = 0, padx = 300)
+      izhod1.grid( row = 0, column = 0, padx = 300)
       ponovna_igra = tk.Button(zacetek, wraplength = 200 , text = "Poskusi znova", fg = "white", bg = "grey6", width = 15 ,height = 2,  font = ("Comic Sans MS", 30), command = lambda : grafika.pred_ponovno_igro_uniči_prejšne_widgete(self, zacetek))
-      ponovna_igra.grid(sticky = E  ,  row = 0, column = 1, padx = 300)
+      ponovna_igra.grid(   row = 0, column = 1, padx = 300)
       self.dodaj_na_seznam_widgetov(ozadje_s_sliko, koncaj, izhod1, ponovna_igra)
       zacetek.mainloop()
 
@@ -139,7 +139,10 @@ class grafika:
    def uniči_gumbe(self, seznam):
       dolzina_seznama = len(seznam)
       for i in range(0,dolzina_seznama):
-         seznam[i].destroy()
+         try:
+            seznam[i].destroy()
+         except:
+            pass
       for i in range(0, dolzina_seznama):
          del seznam[dolzina_seznama - i - 1]
 
@@ -180,7 +183,7 @@ class grafika:
          pravilno.place(relx = .5 , rely = .3, anchor = "center")
          naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek, self.glasba, okvir_za_gumbe) )
          naprej.place(relx = .4 , rely = .5, anchor = "center")
-         vzemi = tk.Button(zacetek, text = "Vzemi 1000 € in končaj", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.vzemi_okno(self, zacetek, self.glasba,1000, okvir_za_gumbe) )
+         vzemi = tk.Button(zacetek, text = "Vzemi 1000 €", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.vzemi_okno(self, zacetek, self.glasba,1000, okvir_za_gumbe) )
          vzemi.place(relx = .6 , rely = .5, anchor = "center")
          self.dodaj_na_seznam_widgetov( pravilno, naprej, vzemi)
          if(grafika.stevilka_vprasanja == 5):
@@ -192,7 +195,7 @@ class grafika:
          pravilno.place(relx = .5 , rely = .3, anchor = "center")
          naprej = tk.Button(zacetek, text = "Naprej", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.zacni(self, zacetek, self.glasba, okvir_za_gumbe) )
          naprej.place(relx = .4 , rely = .5, anchor = "center")
-         vzemi = tk.Button(zacetek, text = "Vzemi 32000 € in končaj", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.vzemi_okno(self, zacetek, self.glasba,32000, okvir_za_gumbe) )
+         vzemi = tk.Button(zacetek, text = "Vzemi 32000 €", fg = "white", bg = "grey6", font = ("Comic Sans MS", 30), command = lambda : grafika.vzemi_okno(self, zacetek, self.glasba,32000, okvir_za_gumbe) )
          vzemi.place(relx = .6 , rely = .5, anchor = "center")
          self.dodaj_na_seznam_widgetov( pravilno, naprej, vzemi)
          if(grafika.stevilka_vprasanja == 10):
@@ -251,9 +254,10 @@ class grafika:
       else:
          grafika.pokrij(pravilni_odgovor, vprasanje_in_odgovori)
 
-   def izkoristi_polovicko(self,vprasanje_in_odgovori, gumb):
+   def izkoristi_polovicko(self,vprasanje_in_odgovori, gumb, glas_ljudstva):
       pravilni_odgovor = grafika.vrni_pravilni_odgovor(self, vprasanje_in_odgovori)
       grafika.pokrij(pravilni_odgovor, vprasanje_in_odgovori)
+      glas_ljudstva.grid_forget()
       self.podatki.polovicka = False
       gumb.config(state = "disabled")
 
@@ -377,18 +381,7 @@ class grafika:
       self.uniči_gumbe(self.seznam_widgetov)
       vprasanje_in_odgovori = grafika.izberi_novo_vprasanje(self)
       vprasanje = vprasanje_in_odgovori[1].strip('\n')
-   
-      if (self.podatki.polovicka == True):
-         gumb_polovicka = tk.Button(okvir_za_gumbe,command = lambda : grafika.izkoristi_polovicko(self,vprasanje_in_odgovori, gumb_polovicka))
-         gumb_polovicka.grid(sticky = E, row = 1, column = 2, padx = 200, pady = 80)
-         polovic = tk.PhotoImage(file = "ozadja/polovicka.gif")
-         gumb_polovicka.config(image = polovic)
-         self.seznam_widgetov.append(gumb_polovicka)
-      else:
-         nepolovic = tk.PhotoImage(file = "ozadja/nepolovicka.gif")
-         nepol = tk.Label(okvir_za_gumbe, image = nepolovic)
-         nepol.grid(sticky = E, row = 1, column = 2, pady = 80, padx = 200)
-         self.seznam_widgetov.append(nepol)
+
       if (self.podatki.glas_ljudstva == True):
          gumb_glas_ljudstva = tk.Button(okvir_za_gumbe, command = lambda : grafika.izkoristi_glas_ljudstva(self, vprasanje_in_odgovori, gumb_glas_ljudstva))
          gumb_glas_ljudstva.grid(sticky = E, row = 2, column = 2, padx = 200, pady = 80)
@@ -400,6 +393,19 @@ class grafika:
          neglas_ljudstva = tk.Label(okvir_za_gumbe, image = neglas_ljudstva_slika)
          neglas_ljudstva.grid(sticky = E, row = 2, column = 2, padx = 200, pady = 80)
          self.seznam_widgetov.append(neglas_ljudstva)
+         
+      if (self.podatki.polovicka == True):
+         gumb_polovicka = tk.Button(okvir_za_gumbe,command = lambda : grafika.izkoristi_polovicko(self,vprasanje_in_odgovori, gumb_polovicka, gumb_glas_ljudstva))
+         gumb_polovicka.grid(sticky = E, row = 1, column = 2, padx = 200, pady = 80)
+         polovic = tk.PhotoImage(file = "ozadja/polovicka.gif")
+         gumb_polovicka.config(image = polovic)
+         self.seznam_widgetov.append(gumb_polovicka)
+      else:
+         nepolovic = tk.PhotoImage(file = "ozadja/nepolovicka.gif")
+         nepol = tk.Label(okvir_za_gumbe, image = nepolovic)
+         nepol.grid(sticky = E, row = 1, column = 2, pady = 80, padx = 200)
+         self.seznam_widgetov.append(nepol)
+      
 
       grafika.vprasanje_stirje_odgovori(self,vprasanje_in_odgovori, zacetek, okvir_za_gumbe, vprasanje)  
       zacetek.mainloop()
@@ -414,7 +420,7 @@ def prva(okno):
    visina_okna = okno.winfo_screenheight()
    okno.geometry("{0}x{1}+0+0".format(sirina_okna,visina_okna ))
    zasluzeni_denar = 0
-   stevilka_vprasanja = 1
+   stevilka_vprasanja = 15
    polovicka = True
    glas_ljudstva = True
    ozadje = Image.open("ozadja/mil.gif")
